@@ -1,0 +1,8 @@
+# ninja log v5
+0	216	1683308751996841858	CMakeFiles/scrabble-game-sfml.dir/main.cpp.o	4ce2317be4d7cef5
+216	248	1683308752027841740	scrabble-game-sfml	f485119c6cd8d670
+1	38	1683309294563766883	scrabble-game-sfml	7ff3d59d2a8607d7
+1	222	1683309324642651736	CMakeFiles/scrabble-game-sfml.dir/main.cpp.o	4ce2317be4d7cef5
+222	258	1683309324679651594	scrabble-game-sfml	7ff3d59d2a8607d7
+1	221	1683309359985516401	CMakeFiles/scrabble-game-sfml.dir/main.cpp.o	4ce2317be4d7cef5
+221	261	1683309360024516251	scrabble-game-sfml	7ff3d59d2a8607d7
