@@ -215,11 +215,11 @@ build ContinuousSubmit: phony CMakeFiles/ContinuousSubmit
 #############################################
 # Order-only phony target for scrabble-game-sfml
 
-build cmake_object_order_depends_target_scrabble-game-sfml: phony || CMakeFiles/scrabble-game-sfml.dir
+build cmake_object_order_depends_target_scrabble-game-sfml: phony || cmake_object_order_depends_target_LibsModule
 
 build CMakeFiles/scrabble-game-sfml.dir/main.cpp.o: CXX_COMPILER__scrabble-game-sfml_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/main.cpp || cmake_object_order_depends_target_scrabble-game-sfml
   DEP_FILE = CMakeFiles/scrabble-game-sfml.dir/main.cpp.o.d
-  FLAGS = -g -std=gnu++11
+  FLAGS = -g -std=gnu++17
   OBJECT_DIR = CMakeFiles/scrabble-game-sfml.dir
   OBJECT_FILE_DIR = CMakeFiles/scrabble-game-sfml.dir
 
@@ -231,15 +231,58 @@ build CMakeFiles/scrabble-game-sfml.dir/main.cpp.o: CXX_COMPILER__scrabble-game-
 #############################################
 # Link the executable scrabble-game-sfml
 
-build scrabble-game-sfml: CXX_EXECUTABLE_LINKER__scrabble-game-sfml_Debug CMakeFiles/scrabble-game-sfml.dir/main.cpp.o
+build scrabble-game-sfml: CXX_EXECUTABLE_LINKER__scrabble-game-sfml_Debug CMakeFiles/scrabble-game-sfml.dir/main.cpp.o | libLibsModule.a || libLibsModule.a
   FLAGS = -g
   LINK_FLAGS = -rdynamic
-  LINK_LIBRARIES = -lsfml-graphics  -lsfml-window  -lsfml-system
+  LINK_LIBRARIES = -lsfml-graphics  -lsfml-window  -lsfml-system  libLibsModule.a
   OBJECT_DIR = CMakeFiles/scrabble-game-sfml.dir
   POST_BUILD = :
   PRE_LINK = :
   TARGET_FILE = scrabble-game-sfml
   TARGET_PDB = scrabble-game-sfml.dbg
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target LibsModule
+
+
+#############################################
+# Order-only phony target for LibsModule
+
+build cmake_object_order_depends_target_LibsModule: phony || CMakeFiles/LibsModule.dir
+
+build CMakeFiles/LibsModule.dir/word.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/word.cpp || cmake_object_order_depends_target_LibsModule
+  DEP_FILE = CMakeFiles/LibsModule.dir/word.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  OBJECT_DIR = CMakeFiles/LibsModule.dir
+  OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
+
+build CMakeFiles/LibsModule.dir/utilities.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/utilities.cpp || cmake_object_order_depends_target_LibsModule
+  DEP_FILE = CMakeFiles/LibsModule.dir/utilities.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  OBJECT_DIR = CMakeFiles/LibsModule.dir
+  OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
+
+build CMakeFiles/LibsModule.dir/box.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/box.cpp || cmake_object_order_depends_target_LibsModule
+  DEP_FILE = CMakeFiles/LibsModule.dir/box.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  OBJECT_DIR = CMakeFiles/LibsModule.dir
+  OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target LibsModule
+
+
+#############################################
+# Link the static library libLibsModule.a
+
+build libLibsModule.a: CXX_STATIC_LIBRARY_LINKER__LibsModule_Debug CMakeFiles/LibsModule.dir/word.cpp.o CMakeFiles/LibsModule.dir/utilities.cpp.o CMakeFiles/LibsModule.dir/box.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles/LibsModule.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = libLibsModule.a
+  TARGET_PDB = LibsModule.a.dbg
 
 
 #############################################
@@ -528,6 +571,8 @@ build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousS
 # =============================================================================
 # Target aliases.
 
+build LibsModule: phony libLibsModule.a
+
 # =============================================================================
 # Folder targets.
 
@@ -536,7 +581,7 @@ build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousS
 #############################################
 # Folder: /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build
 
-build all: phony scrabble-game-sfml
+build all: phony scrabble-game-sfml libLibsModule.a
 
 # =============================================================================
 # Unknown Build Time Dependencies.

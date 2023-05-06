@@ -31,7 +31,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 12,
+				"line" : 18,
 				"parent" : 0
 			}
 		]
@@ -42,7 +42,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++11"
+					"fragment" : "-g -std=gnu++17"
 				}
 			],
 			"language" : "CXX",
@@ -52,12 +52,19 @@
 				[
 					1
 				],
-				"standard" : "11"
+				"standard" : "17"
 			},
 			"sourceIndexes" : 
 			[
 				0
 			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "LibsModule::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "scrabble-game-sfml::@6890427a1f51a3e7e1df",
@@ -86,6 +93,11 @@
 			{
 				"backtrace" : 2,
 				"fragment" : "-lsfml-system",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "libLibsModule.a",
 				"role" : "libraries"
 			}
 		],
