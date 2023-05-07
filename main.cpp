@@ -36,9 +36,10 @@ int main() {
     sf::Color background_color(58,90,64);
 
     vector<Box> boxes = construction::constructWord(font, "word", 200, 50);
+    Box* heldBox = nullptr;
 
     while(window.isOpen()) {
-        cout << "x: " << sf::Mouse::getPosition(window).x << " y: " << sf::Mouse::getPosition(window).y << endl;
+        //cout << "x: " << sf::Mouse::getPosition(window).x << " y: " << sf::Mouse::getPosition(window).y << endl;
 
         sf::Event event;
         while(window.pollEvent(event)) {
@@ -46,17 +47,36 @@ int main() {
                 window.close();
             }
         }
-
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        
+        if(heldBox) {
+            if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                heldBox->focus = false;
+                heldBox = nullptr;
+            }
+        } else {
             for(Box& b: boxes) {
-                b.checkMouseClick(sf::Mouse::getPosition(window));
+                if(
+                    sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+                    b.checkMouseClick(sf::Mouse::getPosition(window)) &&
+                    !heldBox
+                ) {
+                    heldBox = &b;
+                    heldBox->focus = true;
+                }
             }
         }
+        
 
         window.clear(background_color);
         for(Box& b: boxes) {
             b.update(sf::Mouse::getPosition(window));
-            b.draw(&window);
+            if(&b == heldBox) {
+                continue;
+            }
+            b.draw(window);
+        }
+        if(heldBox) {
+            heldBox->draw(window);
         }
         window.display();
     }

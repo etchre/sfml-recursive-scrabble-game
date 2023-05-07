@@ -21,13 +21,13 @@ class Box {
         );
         sf::Text* getLetter();
         sf::RectangleShape* getSquare();
-        void draw(sf::RenderWindow* window) const;
+        void draw(sf::RenderWindow& window) const;
         void update(const sf::Vector2i& mousePos);
-        void checkMouseClick(const sf::Vector2i& mousePos);
+        bool checkMouseClick(const sf::Vector2i& mousePos);
+        bool focus = false;
     private:
         sf::Text letter;
         sf::RectangleShape square;
-        bool focus = false;
 
 };
 

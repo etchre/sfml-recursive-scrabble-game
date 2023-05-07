@@ -30,9 +30,9 @@ sf::Text* Box::getLetter() {
     return &(this->letter);
 }
 
-void Box::draw(sf::RenderWindow* window) const {
-    window->draw(this->square);
-    window->draw(this->letter);
+void Box::draw(sf::RenderWindow& window) const {
+    window.draw(this->square);
+    window.draw(this->letter);
 }
 
 void Box::update(const sf::Vector2i& mousePos) {
@@ -44,16 +44,16 @@ void Box::update(const sf::Vector2i& mousePos) {
             this->square.getPosition().x - this->letter.getCharacterSize()/24 + Box::size/2 - textBounds.width/2,
             this->square.getPosition().y - this->letter.getCharacterSize() + textBounds.height + (Box::size - textBounds.height)/2
         );
+        this->square.setFillColor(sf::Color(163, 177, 138));
+    } else {
+        this->square.setFillColor(sf::Color(88,129,87));
     }
 }
 
-void Box::checkMouseClick(const sf::Vector2i& mousePos) {
+bool Box::checkMouseClick(const sf::Vector2i& mousePos) {
     if(this->square.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-        std::cout << "click" << std::endl;
-        this->focus = true;
-        this->square.setFillColor(sf::Color(163, 177, 138));
-    } else if(focus){
-        focus = false;
-        this->square.setFillColor(sf::Color(88,129,87));
+        return true;
+    } else {
+        return false;
     }
 }
