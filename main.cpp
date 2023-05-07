@@ -1,15 +1,17 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
 #include "word.h"
 #include "utilities.h"
 #include "box.h"
+#include "construction.h"
 
 using std::cout;
 using std::endl;
+using std::vector;
 
 int main() {
     sf::ContextSettings settings;
@@ -33,20 +35,11 @@ int main() {
 
     sf::Color background_color(58,90,64);
 
-    Box b(&font, 200, 50, 'w');
-    Box b2(&font, 255, 50, 'o');
-    Box b3(&font, 310, 50, 'r');
-    Box b4(&font, 365, 50, 'd');
-
-    sf::Vector2 pos = b.getSquare()->getPosition();
-    sf::FloatRect textPos = b.getLetter()->getGlobalBounds();
-    cout << "x: " << pos.x << " y: " << pos.y << endl;
-    cout << "left: " << textPos.left << 
-            " top: " << textPos.top << 
-            " width: " << textPos.width << 
-            " height: " << textPos.height << endl;
+    vector<Box> boxes = construction::constructWord(font, "word", 200, 50);
 
     while(window.isOpen()) {
+        cout << "x: " << sf::Mouse::getPosition(window).x << " y: " << sf::Mouse::getPosition(window).y << endl;
+
         sf::Event event;
         while(window.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
@@ -54,11 +47,17 @@ int main() {
             }
         }
 
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            for(Box& b: boxes) {
+                b.checkMouseClick(sf::Mouse::getPosition(window));
+            }
+        }
+
         window.clear(background_color);
-        b.draw(&window);
-        b2.draw(&window);
-        b3.draw(&window);
-        b4.draw(&window);
+        for(Box& b: boxes) {
+            b.update(sf::Mouse::getPosition(window));
+            b.draw(&window);
+        }
         window.display();
     }
 

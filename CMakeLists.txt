@@ -13,6 +13,7 @@ ADD_LIBRARY(LibsModule
 word.h word.cpp 
 utilities.h utilities.cpp 
 box.h box.cpp
+construction.h construction.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system LibsModule)

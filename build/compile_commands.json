@@ -22,5 +22,11 @@
   "command": "/usr/bin/g++ -g -std=gnu++17 -o CMakeFiles/LibsModule.dir/box.cpp.o -c /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/box.cpp",
   "file": "/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/box.cpp",
   "output": "CMakeFiles/LibsModule.dir/box.cpp.o"
+},
+{
+  "directory": "/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build",
+  "command": "/usr/bin/g++ -g -std=gnu++17 -o CMakeFiles/LibsModule.dir/construction.cpp.o -c /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/construction.cpp",
+  "file": "/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/construction.cpp",
+  "output": "CMakeFiles/LibsModule.dir/construction.cpp.o"
 }
 ]

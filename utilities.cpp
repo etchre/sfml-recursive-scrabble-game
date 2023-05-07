@@ -6,7 +6,7 @@
 #include <random>
 #include <cctype>
 
-int binarySearch(string key, const vector<Word> &vec) {
+int utilities::binarySearch(string key, const vector<Word> &vec) {
     int low = 0;
     int high = vec.size() - 1;
 
@@ -33,7 +33,7 @@ int binarySearch(string key, const vector<Word> &vec) {
 
 // partition function which is used for quicksort
 // sorts by size of word!!
-int partition(vector<Word> &vec, const int &startIndex, const int &endIndex) {
+int utilities::partition(vector<Word> &vec, const int &startIndex, const int &endIndex) {
     // Select the middle value as the pivot.
     long int midpoint = startIndex + (endIndex - startIndex) / 2;
     Word pivot = vec.at(midpoint);
@@ -74,7 +74,7 @@ int partition(vector<Word> &vec, const int &startIndex, const int &endIndex) {
 
 // quicksort function which sorts an vector of word items in ascending.
 // used to put the vector of words in ascending order according to the size of words
-void quicksort(vector<Word> &vec, const int &startIndex, const int &endIndex) {
+void utilities::quicksort(vector<Word> &vec, const int &startIndex, const int &endIndex) {
     // Only attempt to sort the array segment if there are
     // at least 2 elements
     if (endIndex <= startIndex) {
@@ -82,19 +82,19 @@ void quicksort(vector<Word> &vec, const int &startIndex, const int &endIndex) {
     }
 
     // Partition the array segmentt
-    int high = partition(vec, startIndex, endIndex);
+    int high = utilities::partition(vec, startIndex, endIndex);
 
     // Recursively sort the left segment
-    quicksort(vec, startIndex, high);
+    utilities::quicksort(vec, startIndex, high);
 
     // Recursively sort the right segment
-    quicksort(vec, high + 1, endIndex);
+    utilities::quicksort(vec, high + 1, endIndex);
 }
 
 // new code I inserted into the game
 // returns a vector of words all containing the given length of word
 // used to make sure the game will always pick a word of a certain size
-vector<Word> subsection(const vector<Word> &vec, int wordLength) {
+vector<Word> utilities::subsection(const vector<Word> &vec, int wordLength) {
     if (wordLength < 2 || wordLength > 15) {
         throw std::invalid_argument("value must be within 2-15");
     }
@@ -140,7 +140,7 @@ vector<Word> subsection(const vector<Word> &vec, int wordLength) {
 // recursive function
 // finds every word you can make using the letters in remainLetters
 // scramLetters should be left empty when using this function
-vector<string> findAllPossibilities(string remainLetters, string scramLetters) {
+vector<string> utilities::findAllPossibilities(string remainLetters, string scramLetters) {
     string tmpString;
     vector<string> result;
 
@@ -167,12 +167,12 @@ vector<string> findAllPossibilities(string remainLetters, string scramLetters) {
 //a wrapper function for the findAllPossibilities function
 //iterates over the vector returned by said function, and only keeps the words
 //that exist in the word list, then it returns a vector of those words
-vector<string> findAllValidWords(vector<Word> &vec, const string &word) {
+vector<string> utilities::findAllValidWords(vector<Word> &vec, const string &word) {
     vector<string> result;
-    vector<string> possibleWords = findAllPossibilities(word);
+    vector<string> possibleWords = utilities::findAllPossibilities(word);
 
     for (const auto &w : possibleWords) {
-        if (binarySearch(w, vec) != -1) {
+        if (utilities::binarySearch(w, vec) != -1) {
             if(std::find(result.begin(), result.end(), w) == result.end()) {
                 result.push_back(w);
             }
@@ -186,7 +186,7 @@ vector<string> findAllValidWords(vector<Word> &vec, const string &word) {
 // shuffles the vector in place
 // implements the fisher yates shuffle
 // used to randomize the letters in words, or the order of the vector of words
-template <class T> void shuffle(vector<T> &vec) {
+template <class T> void utilities::shuffle(vector<T> &vec) {
     std::random_device os_seed;  // gets a seed from the operating system
     std::mt19937 rng(os_seed()); // initializes the mersenne twister engine using the above seed
     for (int i = vec.size() - 1; i > 1; i--) {

@@ -4,8 +4,9 @@
 #include "word.h"
 #include <cstddef>
 #include <sstream>
+#include <string>
 
-using namespace std;
+using std::string;
 
 Word::Word(string word) {
     this->word = word;

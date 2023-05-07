@@ -10,10 +10,10 @@ class Box {
 
     public:
         inline static int size = 50;
-        inline static sf::Color squareColor = sf::Color(88,129,87);
+        sf::Color squareColor = sf::Color(88,129,87); 
         inline static sf::Color textColor = sf::Color(218,215,205);
         Box(
-            const sf::Font* font, 
+            const sf::Font& font, 
             const int& x,
             const int& y,
             const char& letter=' ', 
@@ -21,12 +21,13 @@ class Box {
         );
         sf::Text* getLetter();
         sf::RectangleShape* getSquare();
-        void draw(sf::RenderWindow* window);
+        void draw(sf::RenderWindow* window) const;
+        void update(const sf::Vector2i& mousePos);
+        void checkMouseClick(const sf::Vector2i& mousePos);
     private:
         sf::Text letter;
         sf::RectangleShape square;
-        const sf::Vector2f* squarePos;
-
+        bool focus = false;
 
 };
 
