@@ -1,3 +1,4 @@
+#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 #include <fstream>
 
@@ -30,7 +31,20 @@ int main() {
         return -1;
     }
 
-    Box b(&font);
+    sf::Color background_color(58,90,64);
+
+    Box b(&font, 200, 50, 'w');
+    Box b2(&font, 255, 50, 'o');
+    Box b3(&font, 310, 50, 'r');
+    Box b4(&font, 365, 50, 'd');
+
+    sf::Vector2 pos = b.getSquare()->getPosition();
+    sf::FloatRect textPos = b.getLetter()->getGlobalBounds();
+    cout << "x: " << pos.x << " y: " << pos.y << endl;
+    cout << "left: " << textPos.left << 
+            " top: " << textPos.top << 
+            " width: " << textPos.width << 
+            " height: " << textPos.height << endl;
 
     while(window.isOpen()) {
         sf::Event event;
@@ -40,8 +54,11 @@ int main() {
             }
         }
 
-        window.clear();
-        window.draw(*b.getSquare());
+        window.clear(background_color);
+        b.draw(&window);
+        b2.draw(&window);
+        b3.draw(&window);
+        b4.draw(&window);
         window.display();
     }
 
