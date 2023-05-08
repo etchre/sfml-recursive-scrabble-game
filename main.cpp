@@ -15,7 +15,7 @@ using std::vector;
 
 int main() {
     sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
+    settings.antialiasingLevel = 4;
 
     sf::RenderWindow window(
         sf::VideoMode(800,600), 
@@ -35,8 +35,8 @@ int main() {
 
     sf::Color background_color(58,90,64);
 
-    vector<Box> boxes = construction::constructWord(font, "word", 200, 50);
-    Box* heldBox = nullptr;
+    vector<objects::Box> boxes = construction::constructWord(font, "golf", 200, 50);
+    objects::Box* heldBox = nullptr;
 
     while(window.isOpen()) {
         //cout << "x: " << sf::Mouse::getPosition(window).x << " y: " << sf::Mouse::getPosition(window).y << endl;
@@ -54,7 +54,7 @@ int main() {
                 heldBox = nullptr;
             }
         } else {
-            for(Box& b: boxes) {
+            for(objects::Box& b: boxes) {
                 if(
                     sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
                     b.checkMouseClick(sf::Mouse::getPosition(window)) &&
@@ -68,7 +68,7 @@ int main() {
         
 
         window.clear(background_color);
-        for(Box& b: boxes) {
+        for(objects::Box& b: boxes) {
             b.update(sf::Mouse::getPosition(window));
             if(&b == heldBox) {
                 continue;
