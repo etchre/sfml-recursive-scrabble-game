@@ -12,7 +12,7 @@ add_executable(${PROJECT_NAME} main.cpp)
 ADD_LIBRARY(LibsModule 
 word.h word.cpp 
 utilities.h utilities.cpp 
-box.h objects.cpp
+objects.h box.h slot.h objects.cpp
 construction.h construction.cpp
 )
 

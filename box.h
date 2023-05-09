@@ -6,28 +6,33 @@
 
 #include <SFML/Graphics.hpp>
 namespace objects {
+
     class Box {
+
         public:
-            inline static int size = 60;
-            sf::Color squareColor = sf::Color(88,129,87); 
-            inline static sf::Color textColor = sf::Color(218,215,205);
             Box(
                 const sf::Font& font, 
-                const int& x,
-                const int& y,
+                const float& x,
+                const float& y,
                 const char& letter=' ', 
-                const int& s=Box::size
+                const float& s=Box::size
             );
+            inline static float size = 60;
+            inline static sf::Color textColor = sf::Color(218,215,205);
+            sf::Color squareColor = sf::Color(88,129,87); 
             sf::Text* getLetter();
             sf::RectangleShape* getSquare();
             void draw(sf::RenderWindow& window) const;
             void update(const sf::Vector2i& mousePos);
+            void setPosition(const float& x, const float& y);
             bool checkMouseClick(const sf::Vector2i& mousePos);
             bool focus = false;
+
         private:
             sf::Text letter;
             sf::RectangleShape square;
     };
+
 }
 
 #endif

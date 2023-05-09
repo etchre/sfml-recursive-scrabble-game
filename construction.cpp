@@ -1,14 +1,33 @@
 #include "construction.h"
 
-vector<objects::Box> construction::constructWord(const sf::Font& font,const string& word, const int& x, const int& y) {
-    vector<objects::Box> result;
+#include <iostream>
 
+void construction::constructWord(
+    const sf::Font& font,
+    const string& word, 
+    const int& x, 
+    const int& y, 
+    vector<objects::Box>& boxVec,
+    list<objects::Slot>& slotVec
+) {
     int inc = 0;
-    int gap = 5;
+    int gap = 15;
     for(const char& c : word) {
-        result.push_back(objects::Box(font, x+inc*(gap+objects::Box::size), y, c));
+        boxVec.push_back(objects::Box(font, x+inc*(gap+objects::Slot::size), y, c));
+        float slotSizeDifference = (objects::Slot::size - objects::Box::size)/2;
+        slotVec.push_back(
+            objects::Slot(
+                x-slotSizeDifference+inc*(gap+objects::Slot::size), 
+                y-slotSizeDifference
+            )
+        );
         inc++;
     }
-
-    return result;
+    auto iter = slotVec.begin();
+    // std::cout << "from construction" << std::endl;
+    for(objects::Box& b : boxVec) {
+        // std::cout << &b << std::endl;
+        iter->setBox(&b);
+        iter++;
+    }
 }

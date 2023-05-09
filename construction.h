@@ -1,18 +1,22 @@
 #include <vector>
 #include <string>
+#include <list>
 
 #include <SFML/Graphics.hpp>
 
-#include "box.h"
+#include "objects.h"
 
 using std::vector;
 using std::string;
+using std::list;
 
 namespace construction{
-    vector<objects::Box> constructWord(
+    void constructWord(
         const sf::Font& font,
         const string& word, 
         const int& x, 
-        const int& y
+        const int& y,
+        vector<objects::Box>& boxVec,
+        list<objects::Slot>& slotVec
     );
 }

@@ -1,17 +1,19 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <list>
 
 #include <SFML/Graphics.hpp>
 
 #include "word.h"
 #include "utilities.h"
-#include "box.h"
+#include "objects.h"
 #include "construction.h"
 
 using std::cout;
 using std::endl;
 using std::vector;
+using std::list;
 
 int main() {
     sf::ContextSettings settings;
@@ -35,7 +37,22 @@ int main() {
 
     sf::Color background_color(58,90,64);
 
-    vector<objects::Box> boxes = construction::constructWord(font, "golf", 200, 50);
+    vector<objects::Box> boxes;
+    list<objects::Slot> slots;
+    construction::constructWord(font, "golf", 250, 200, boxes, slots);
+
+    // std::cout << "boxes from main" << std::endl;
+
+    // for(objects::Box& b : boxes) {
+    //     cout << &b << endl;
+    // }
+
+    // std::cout << "slots from main" << std::endl;
+
+    // for(objects::Slot& s : slots) {
+    //     cout << s.heldBox << endl;
+    // }
+
     objects::Box* heldBox = nullptr;
 
     while(window.isOpen()) {
@@ -45,19 +62,32 @@ int main() {
         while(window.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
                 window.close();
+            } 
+            if(event.type == sf::Event::MouseLeft) {
+                cout << "mouse left" << endl;
+                if(heldBox) {
+                    heldBox->focus = false;
+                    heldBox = nullptr;
+                }
             }
         }
         
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         if(heldBox) {
             if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 heldBox->focus = false;
+
+                for(objects::Slot& s: slots) {
+                    s.checkOverlap(mousePos, heldBox);
+                }
+
                 heldBox = nullptr;
             }
         } else {
             for(objects::Box& b: boxes) {
                 if(
                     sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-                    b.checkMouseClick(sf::Mouse::getPosition(window)) &&
+                    b.checkMouseClick(mousePos) &&
                     !heldBox
                 ) {
                     heldBox = &b;
@@ -65,11 +95,14 @@ int main() {
                 }
             }
         }
-        
 
         window.clear(background_color);
+        for(objects::Slot& s: slots) {
+            s.update();
+            s.draw(window);
+        }
         for(objects::Box& b: boxes) {
-            b.update(sf::Mouse::getPosition(window));
+            b.update(mousePos);
             if(&b == heldBox) {
                 continue;
             }
