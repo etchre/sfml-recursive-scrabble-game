@@ -6,9 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 namespace objects {
-
     class Box {
-
         public:
             Box(
                 const sf::Font& font, 
@@ -26,13 +24,14 @@ namespace objects {
             void update(const sf::Vector2i& mousePos);
             void setPosition(const float& x, const float& y);
             bool checkMouseClick(const sf::Vector2i& mousePos);
+            bool isMouseOver(const sf::Vector2i& mousePos);
             bool focus = false;
 
         private:
+            char charLetter;
             sf::Text letter;
             sf::RectangleShape square;
     };
-
 }
 
 #endif

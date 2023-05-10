@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "button.h"
 #include "word.h"
 #include "utilities.h"
 #include "objects.h"
@@ -26,6 +27,12 @@ int main() {
         settings
     );
 
+    sf::Cursor handCursor;
+    sf::Cursor arrowCursor;
+
+    handCursor.loadFromSystem(sf::Cursor::Hand);
+    arrowCursor.loadFromSystem(sf::Cursor::Arrow);
+
     ifstream file("../CollinsScrabbleWords_2019.txt");
 
     file.close();
@@ -39,7 +46,11 @@ int main() {
 
     vector<objects::Box> boxes;
     list<objects::Slot> slots;
+    vector<objects::Button> buttons;
     construction::constructWord(font, "golf", 250, 200, boxes, slots);
+    buttons.push_back(
+        objects::Button(font, 329, 290, "check")
+    );
 
     // std::cout << "boxes from main" << std::endl;
 
@@ -96,12 +107,32 @@ int main() {
             }
         }
 
+        bool mouseHover = false;
+
         window.clear(background_color);
+        for(objects::Button& button : buttons) {
+            if(button.isMouseOver(mousePos)) {
+                mouseHover = true;
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    button.clicked = true;
+                } else {
+                    button.clicked = false;
+                }
+            }
+            button.update();
+            button.draw(window);
+        }
         for(objects::Slot& s: slots) {
+            if(s.isMouseOver(mousePos)) {
+                mouseHover = true;
+            }
             s.update();
             s.draw(window);
         }
         for(objects::Box& b: boxes) {
+            if(b.isMouseOver(mousePos)) {
+                mouseHover = true;
+            }
             b.update(mousePos);
             if(&b == heldBox) {
                 continue;
@@ -111,8 +142,13 @@ int main() {
         if(heldBox) {
             heldBox->draw(window);
         }
+        if(mouseHover) {
+            window.setMouseCursor(handCursor);
+        } else {
+            window.setMouseCursor(arrowCursor);
+        }
         window.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

@@ -1,10 +1,12 @@
 #include "box.h"
 #include "slot.h"
+#include "button.h"
 
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
 
+//box member definitions
 namespace objects {
 
     //box definitions
@@ -80,6 +82,15 @@ namespace objects {
         }
     }
 
+    bool Box::isMouseOver(const sf::Vector2i &mousePos) {
+        return this->square.getGlobalBounds().contains(mousePos.x, mousePos.y);
+    }
+
+}
+
+//slot member definitions
+namespace objects {
+
     Slot::Slot(const float& x, const float& y) {
         this->square = sf::RectangleShape(sf::Vector2f(Slot::size, Slot::size));
         this->square.setPosition(x,y);
@@ -119,7 +130,7 @@ namespace objects {
         if(this->square.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
             if(this->heldBox) {
                 sf::Vector2 currPos = this->heldBox->getSquare()->getPosition();
-                this->heldBox->setPosition(currPos.x, currPos.y - Slot::size);
+                this->heldBox->setPosition(currPos.x, currPos.y - Slot::size - 5);
                 this->heldBox = nullptr;
             }
             this->heldBox = box;
@@ -127,8 +138,71 @@ namespace objects {
         } 
     }
 
+    bool Slot::isMouseOver(const sf::Vector2i &mousePos) {
+        return this->square.getGlobalBounds().contains(mousePos.x, mousePos.y);
+    }
+
     void Slot::setBox(Box* box) {
         this->heldBox = box;
     }
 
+}
+
+//button member defintions
+namespace objects {
+
+    Button::Button(
+        const sf::Font& font,
+        const float& x,
+        const float& y,
+        const string& str,
+        const int& size,
+        const sf::Color& rectColor,
+        const sf::Color& clickColor
+    ) {
+        this->buttonText = sf::Text(str, font, 32);
+        this->buttonText.setFillColor(Button::textColor);
+
+        sf::Rect buttonTextRect = this->buttonText.getLocalBounds();
+        this->rect = sf::RectangleShape(
+            sf::Vector2f(buttonTextRect.width*1.2,buttonTextRect.height*1.5)
+        );
+        this->rect.setFillColor(rectColor);
+        this->rect.setOutlineThickness(2);
+        this->rect.setOutlineColor(Button::rectBorderColor);
+
+        this->fillColor = rectColor;
+        this->clickColor = clickColor;
+        
+        this->setPosition(x,y);
+    }
+
+    void Button::draw(sf::RenderWindow& window) const {
+        window.draw(this->rect);
+        window.draw(this->buttonText);
+    }
+
+    void Button::update() {
+        if(clicked) {
+            this->rect.setFillColor(this->clickColor);
+        } else {
+            this->rect.setFillColor(this->fillColor);
+        }
+    }
+
+    void Button::setPosition(const float& x, const float& y) {
+        sf::FloatRect textBounds = this->buttonText.getLocalBounds();
+        sf::FloatRect rectBounds = this->rect.getLocalBounds();
+        this->rect.setPosition(x, y);
+        this->buttonText.setPosition(
+            //squarePos->x + this->letter.getCharacterSize() - 50 + Box::size/2 - 14
+            this->rect.getPosition().x - this->buttonText.getCharacterSize()/24 + rectBounds.width/2 - textBounds.width/2 - 4,
+            this->rect.getPosition().y - this->buttonText.getCharacterSize() + textBounds.height + (rectBounds.height - textBounds.height)/2
+        );
+    }
+
+    bool Button::isMouseOver(const sf::Vector2i &mousePos) {
+        return this->rect.getGlobalBounds().contains(mousePos.x, mousePos.y);
+    }
+    
 }
