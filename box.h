@@ -19,6 +19,7 @@ namespace objects {
             inline static sf::Color textColor = sf::Color(218,215,205);
             sf::Color squareColor = sf::Color(88,129,87); 
             sf::Text* getLetter();
+            char getCharLetter();
             sf::RectangleShape* getSquare();
             void draw(sf::RenderWindow& window) const;
             void update(const sf::Vector2i& mousePos);

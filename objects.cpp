@@ -15,6 +15,7 @@ namespace objects {
         this->square.setFillColor(Box::squareColor);
         this->square.setPosition(x,y);
 
+        this->charLetter = letter;
         this->letter = sf::Text();
         this->letter.setFont(font);
         this->letter.setFillColor(Box::textColor);
@@ -36,6 +37,10 @@ namespace objects {
 
     sf::Text* Box::getLetter() {
         return &(this->letter);
+    }
+
+    char Box::getCharLetter() {
+        return this->charLetter;
     }
 
     void Box::draw(sf::RenderWindow& window) const {
@@ -146,6 +151,14 @@ namespace objects {
         this->heldBox = box;
     }
 
+    char Slot::getHeldLetter() {
+        if(this->heldBox) {
+            return this->heldBox->getCharLetter();
+        } else {
+            return ' ';
+        }
+    }
+
 }
 
 //button member defintions
@@ -155,6 +168,7 @@ namespace objects {
         const sf::Font& font,
         const float& x,
         const float& y,
+        const std::function<void()>& f,
         const string& str,
         const int& size,
         const sf::Color& rectColor,
@@ -173,6 +187,8 @@ namespace objects {
 
         this->fillColor = rectColor;
         this->clickColor = clickColor;
+
+        this->clickFunction = f;
         
         this->setPosition(x,y);
     }

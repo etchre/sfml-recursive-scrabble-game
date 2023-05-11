@@ -24,6 +24,7 @@ namespace objects {
             void checkOverlap(const sf::Vector2i& mousePos, Box* box);
             bool isMouseOver(const sf::Vector2i& mousePos);
             void setBox(Box* box);
+            char getHeldLetter();
             objects::Box* heldBox = nullptr;
 
         private:

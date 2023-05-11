@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <string>
+#include <functional>
 
 using std::string;
 
@@ -17,6 +18,7 @@ namespace objects {
                 const sf::Font& font,
                 const float& x,
                 const float& y,
+                const std::function<void()>& f,
                 const string& str = "",
                 const int& size = 32,
                 const sf::Color& fillColor = sf::Color(88,129,87),
@@ -27,6 +29,7 @@ namespace objects {
             void setPosition(const float& x, const float& y);
             bool isMouseOver(const sf::Vector2i& mousePos);
             bool clicked = false;
+            std::function<void()> clickFunction;
 
         private:
             sf::RectangleShape rect;

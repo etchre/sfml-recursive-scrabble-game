@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <list>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 
@@ -27,15 +28,31 @@ int main() {
         settings
     );
 
+    sf::Clock clock;
+
     sf::Cursor handCursor;
     sf::Cursor arrowCursor;
 
     handCursor.loadFromSystem(sf::Cursor::Hand);
     arrowCursor.loadFromSystem(sf::Cursor::Arrow);
 
+    vector<Word> wordList;
+    vector<Word> wordListBySize;
     ifstream file("../CollinsScrabbleWords_2019.txt");
 
+    if(file.is_open()) {
+        string line;
+        getline(file, line); //skip header line
+
+        while(getline(file, line)) {
+            wordList.push_back(Word(line.substr(0,line.size() - 1)));
+        }
+    }
+
     file.close();
+
+    wordListBySize = wordList; //make copy of wordList;
+    utilities::quicksort(wordListBySize, 0, wordListBySize.size() - 1);
 
     sf::Font font;
     if(!font.loadFromFile("../assets/VulfMonoLight.ttf")) {
@@ -49,20 +66,30 @@ int main() {
     vector<objects::Button> buttons;
     construction::constructWord(font, "golf", 250, 200, boxes, slots);
     buttons.push_back(
-        objects::Button(font, 329, 290, "check")
+        objects::Button(
+            font, 
+            329, 
+            290, 
+            [&slots, &wordList]() {
+                string word = "";
+                for(objects::Slot& s : slots) {
+                    char currLetter = s.getHeldLetter();
+                    if(currLetter != ' ') {
+                        word += currLetter;
+                    }
+                }
+                cout << word << endl;
+                if(utilities::binarySearch(word, wordList) != -1) {
+                    if(word.length() == 4) {
+                        cout << "valid word" << endl;
+                        return;
+                    }
+                }
+                cout << "not a valid word" << endl;
+            }, 
+            "check"
+        )
     );
-
-    // std::cout << "boxes from main" << std::endl;
-
-    // for(objects::Box& b : boxes) {
-    //     cout << &b << endl;
-    // }
-
-    // std::cout << "slots from main" << std::endl;
-
-    // for(objects::Slot& s : slots) {
-    //     cout << s.heldBox << endl;
-    // }
 
     objects::Box* heldBox = nullptr;
 
@@ -116,6 +143,9 @@ int main() {
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     button.clicked = true;
                 } else {
+                    if(button.clicked) {
+                        button.clickFunction();
+                    }
                     button.clicked = false;
                 }
             }
