@@ -15,8 +15,6 @@ namespace construction{
     void constructWord(
         const sf::Font& font,
         const string& word, 
-        const int& x, 
-        const int& y,
         vector<objects::Box>& boxVec,
         list<objects::Slot>& slotVec
     );

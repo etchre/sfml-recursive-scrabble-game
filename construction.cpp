@@ -5,23 +5,22 @@
 void construction::constructWord(
     const sf::Font& font,
     const string& word, 
-    const int& x, 
-    const int& y, 
     vector<objects::Box>& boxVec,
     list<objects::Slot>& slotVec
 ) {
-    int inc = 0;
+    float slotSizeDifference = (objects::Slot::size - objects::Box::size)/2;
+    float inc = 7;
     int gap = 15;
+    std::cout << slotSizeDifference << std::endl;
     for(const char& c : word) {
-        boxVec.push_back(objects::Box(font, x+inc*(gap+objects::Slot::size), y, c));
-        float slotSizeDifference = (objects::Slot::size - objects::Box::size)/2;
+        boxVec.push_back(objects::Box(font, 0+inc, 200, c));
         slotVec.push_back(
             objects::Slot(
-                x-slotSizeDifference+inc*(gap+objects::Slot::size), 
-                y-slotSizeDifference
+                0-slotSizeDifference+inc, 
+                200-slotSizeDifference
             )
         );
-        inc++;
+        inc+=(gap+objects::Slot::size);
     }
     auto iter = slotVec.begin();
     // std::cout << "from construction" << std::endl;
@@ -29,6 +28,10 @@ void construction::constructWord(
         // std::cout << &b << std::endl;
         iter->setBox(&b);
         iter++;
+    }
+    float center = 400 - (inc/2);
+    for(objects::Slot& s : slotVec) {
+        s.move(center);
     }
 }
 
@@ -53,7 +56,7 @@ void construction::constructCorrectTextboxes(
         );
         inc += buttonVec.back().rect.getLocalBounds().width+gap;
     }
-    std::cout << inc << std::endl;
+    //std::cout << inc << std::endl;
     float center = 400 - (inc/2);
     for(auto& b : buttonVec) {
         b.move(center);

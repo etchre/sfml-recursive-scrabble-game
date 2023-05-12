@@ -43,7 +43,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-O3 -DNDEBUG -std=c++17"
+					"fragment" : "-g -std=c++17"
 				}
 			],
 			"language" : "CXX",

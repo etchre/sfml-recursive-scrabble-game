@@ -1,0 +1,2 @@
+/usr/local/bin/scrabble-game-sfml
+/usr/local/lib/libLibsModule.a

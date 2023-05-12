@@ -79,6 +79,11 @@ namespace objects {
         );
     }
 
+    void Box::move(const float& x, const float& y) {
+        this->square.move(x,y);
+        this->letter.move(x,y);
+    }
+
     bool Box::checkMouseClick(const sf::Vector2i& mousePos) {
         if(this->square.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
             return true;
@@ -140,6 +145,13 @@ namespace objects {
             }
             this->heldBox = box;
             box->setPosition(this->square.getPosition().x+2.5f, this->square.getPosition().y+2.5f);
+        }
+    }
+
+    void Slot::move(const float& x, const float& y) {
+        this->square.move(x,y);
+        if(this->heldBox) {
+            this->heldBox->move(x,y);
         }
     }
 

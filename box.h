@@ -24,6 +24,7 @@ namespace objects {
             void draw(sf::RenderWindow& window) const;
             void update(const sf::Vector2i& mousePos);
             void setPosition(const float& x, const float& y);
+            void move(const float& x=0.0, const float& y=0.0);
             bool checkMouseClick(const sf::Vector2i& mousePos);
             bool isMouseOver(const sf::Vector2i& mousePos);
             bool focus = false;

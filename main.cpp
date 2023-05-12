@@ -92,13 +92,13 @@ int main() {
         //      continue;
         //  }
         // easy mode
-        //  if(findAllValidWords(chosenWord).size() != 2) {
-        //      continue;
-        //  }
+         if(validWords.size() != 2) {
+             continue;
+         }
         // medium mode
-        if (validWords.size() < 3 || validWords.size() > 4) {
-            continue;
-        }
+        // if (validWords.size() < 3 || validWords.size() > 4) {
+        //     continue;
+        // }
         //hard mode
         //  if(validWords.size() < 5) {
         //      continue;
@@ -132,8 +132,6 @@ int main() {
     construction::constructWord(
         font, 
         randomString, 
-        250, 
-        200, 
         boxes, 
         slots
     );
@@ -145,7 +143,7 @@ int main() {
     buttons.push_back(
         objects::Button(
             font, 
-            329, 
+            0, 
             290, 
             [&slots, &wordList, &buttons]() {
                 string word = "";
@@ -173,7 +171,12 @@ int main() {
             "check"
         )
     );
-
+    {
+        buttons.back().move(2);
+        float center = 400 - (buttons.back().rect.getLocalBounds().width/2)-5;
+        buttons.back().move(center);
+    }
+    
     objects::Box* heldBox = nullptr;
 
     while(window.isOpen()) {

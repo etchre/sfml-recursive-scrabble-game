@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: scrabble-game-sfml
-# Configurations: Release
+# Configurations: Debug
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Release
+CONFIGURATION = Debug
 # =============================================================================
 # Include auxiliary files.
 
@@ -217,9 +217,9 @@ build ContinuousSubmit: phony CMakeFiles/ContinuousSubmit
 
 build cmake_object_order_depends_target_scrabble-game-sfml: phony || cmake_object_order_depends_target_LibsModule
 
-build CMakeFiles/scrabble-game-sfml.dir/main.cpp.o: CXX_COMPILER__scrabble-game-sfml_unscanned_Release /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/main.cpp || cmake_object_order_depends_target_scrabble-game-sfml
+build CMakeFiles/scrabble-game-sfml.dir/main.cpp.o: CXX_COMPILER__scrabble-game-sfml_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/main.cpp || cmake_object_order_depends_target_scrabble-game-sfml
   DEP_FILE = CMakeFiles/scrabble-game-sfml.dir/main.cpp.o.d
-  FLAGS = -O3 -DNDEBUG -std=c++17
+  FLAGS = -g -std=c++17
   OBJECT_DIR = CMakeFiles/scrabble-game-sfml.dir
   OBJECT_FILE_DIR = CMakeFiles/scrabble-game-sfml.dir
 
@@ -231,8 +231,8 @@ build CMakeFiles/scrabble-game-sfml.dir/main.cpp.o: CXX_COMPILER__scrabble-game-
 #############################################
 # Link the executable scrabble-game-sfml
 
-build scrabble-game-sfml: CXX_EXECUTABLE_LINKER__scrabble-game-sfml_Release CMakeFiles/scrabble-game-sfml.dir/main.cpp.o | libLibsModule.a || libLibsModule.a
-  FLAGS = -O3 -DNDEBUG
+build scrabble-game-sfml: CXX_EXECUTABLE_LINKER__scrabble-game-sfml_Debug CMakeFiles/scrabble-game-sfml.dir/main.cpp.o | libLibsModule.a || libLibsModule.a
+  FLAGS = -g
   LINK_FLAGS = -rdynamic
   LINK_LIBRARIES = -lsfml-graphics  -lsfml-window  -lsfml-system  libLibsModule.a
   OBJECT_DIR = CMakeFiles/scrabble-game-sfml.dir
@@ -250,27 +250,27 @@ build scrabble-game-sfml: CXX_EXECUTABLE_LINKER__scrabble-game-sfml_Release CMak
 
 build cmake_object_order_depends_target_LibsModule: phony || CMakeFiles/LibsModule.dir
 
-build CMakeFiles/LibsModule.dir/word.cpp.o: CXX_COMPILER__LibsModule_unscanned_Release /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/word.cpp || cmake_object_order_depends_target_LibsModule
+build CMakeFiles/LibsModule.dir/word.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/word.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/word.cpp.o.d
-  FLAGS = -O3 -DNDEBUG -std=c++17
+  FLAGS = -g -std=c++17
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
-build CMakeFiles/LibsModule.dir/utilities.cpp.o: CXX_COMPILER__LibsModule_unscanned_Release /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/utilities.cpp || cmake_object_order_depends_target_LibsModule
+build CMakeFiles/LibsModule.dir/utilities.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/utilities.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/utilities.cpp.o.d
-  FLAGS = -O3 -DNDEBUG -std=c++17
+  FLAGS = -g -std=c++17
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
-build CMakeFiles/LibsModule.dir/objects.cpp.o: CXX_COMPILER__LibsModule_unscanned_Release /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/objects.cpp || cmake_object_order_depends_target_LibsModule
+build CMakeFiles/LibsModule.dir/objects.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/objects.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/objects.cpp.o.d
-  FLAGS = -O3 -DNDEBUG -std=c++17
+  FLAGS = -g -std=c++17
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
-build CMakeFiles/LibsModule.dir/construction.cpp.o: CXX_COMPILER__LibsModule_unscanned_Release /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/construction.cpp || cmake_object_order_depends_target_LibsModule
+build CMakeFiles/LibsModule.dir/construction.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/construction.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/construction.cpp.o.d
-  FLAGS = -O3 -DNDEBUG -std=c++17
+  FLAGS = -g -std=c++17
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
@@ -282,8 +282,8 @@ build CMakeFiles/LibsModule.dir/construction.cpp.o: CXX_COMPILER__LibsModule_uns
 #############################################
 # Link the static library libLibsModule.a
 
-build libLibsModule.a: CXX_STATIC_LIBRARY_LINKER__LibsModule_Release CMakeFiles/LibsModule.dir/word.cpp.o CMakeFiles/LibsModule.dir/utilities.cpp.o CMakeFiles/LibsModule.dir/objects.cpp.o CMakeFiles/LibsModule.dir/construction.cpp.o
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build libLibsModule.a: CXX_STATIC_LIBRARY_LINKER__LibsModule_Debug CMakeFiles/LibsModule.dir/word.cpp.o CMakeFiles/LibsModule.dir/utilities.cpp.o CMakeFiles/LibsModule.dir/objects.cpp.o CMakeFiles/LibsModule.dir/construction.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   POST_BUILD = :
   PRE_LINK = :

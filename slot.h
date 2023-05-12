@@ -22,6 +22,7 @@ namespace objects {
             void draw(sf::RenderWindow& window) const;
             void update();
             void checkOverlap(const sf::Vector2i& mousePos, Box* box);
+            void move(const float& x=0.0, const float& y=0.0);
             bool isMouseOver(const sf::Vector2i& mousePos);
             void setBox(Box* box);
             char getHeldLetter();
