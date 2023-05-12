@@ -6,6 +6,7 @@ enable_testing()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
@@ -17,6 +18,8 @@ construction.h construction.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system LibsModule)
+
+install(TARGETS ${PROJECT_NAME} LibsModule)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

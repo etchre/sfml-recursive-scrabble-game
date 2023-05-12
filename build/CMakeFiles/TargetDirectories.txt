@@ -33,3 +33,7 @@
 /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/test.dir
 /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/edit_cache.dir
 /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/rebuild_cache.dir
+/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/list_install_components.dir
+/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/install.dir
+/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/install/local.dir
+/home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/build/CMakeFiles/install/strip.dir

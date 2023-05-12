@@ -140,7 +140,7 @@ namespace objects {
             }
             this->heldBox = box;
             box->setPosition(this->square.getPosition().x+2.5f, this->square.getPosition().y+2.5f);
-        } 
+        }
     }
 
     bool Slot::isMouseOver(const sf::Vector2i &mousePos) {
@@ -188,14 +188,48 @@ namespace objects {
         this->fillColor = rectColor;
         this->clickColor = clickColor;
 
+        this->hasFunction = true;
         this->clickFunction = f;
         
         this->setPosition(x,y);
     }
 
+    //non function constructor
+    Button::Button(
+                const sf::Font& font,
+                const bool& hidden,
+                const float& x,
+                const float& y,
+                const string& str,
+                const int& size,
+                const sf::Color& fillColor,
+                const sf::Color& clickColor
+    ) {
+        this->buttonText = sf::Text(str, font, size);
+        this->buttonText.setFillColor(Button::textColor);
+
+        sf::Rect buttonTextRect = this->buttonText.getLocalBounds();
+        this->rect = sf::RectangleShape(
+            sf::Vector2f(buttonTextRect.width*1.2,buttonTextRect.height*1.5)
+        );
+        this->rect.setFillColor(fillColor);
+        this->rect.setOutlineThickness(2);
+        this->rect.setOutlineColor(Button::rectBorderColor);
+
+        this->fillColor = fillColor;
+        this->clickColor = clickColor;
+
+        this->hidden = hidden;
+        this->text = str;
+
+        this->setPosition(x,y);
+    };
+
     void Button::draw(sf::RenderWindow& window) const {
         window.draw(this->rect);
-        window.draw(this->buttonText);
+        if(!hidden) {
+            window.draw(this->buttonText);
+        }
     }
 
     void Button::update() {
@@ -215,6 +249,11 @@ namespace objects {
             this->rect.getPosition().x - this->buttonText.getCharacterSize()/24 + rectBounds.width/2 - textBounds.width/2 - 4,
             this->rect.getPosition().y - this->buttonText.getCharacterSize() + textBounds.height + (rectBounds.height - textBounds.height)/2
         );
+    }
+
+    void Button::move(const float& x, const float& y) {
+        this->rect.move(x,y);
+        this->buttonText.move(x,y);
     }
 
     bool Button::isMouseOver(const sf::Vector2i &mousePos) {

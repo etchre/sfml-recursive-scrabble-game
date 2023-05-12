@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <random>
 #include <cctype>
+#include <vector>
 
 int utilities::binarySearch(string key, const vector<Word> &vec) {
     int low = 0;
@@ -180,20 +181,4 @@ vector<string> utilities::findAllValidWords(vector<Word> &vec, const string &wor
     }
 
     return result;
-}
-
-// new code I inserted into the game
-// shuffles the vector in place
-// implements the fisher yates shuffle
-// used to randomize the letters in words, or the order of the vector of words
-template <class T> void utilities::shuffle(vector<T> &vec) {
-    std::random_device os_seed;  // gets a seed from the operating system
-    std::mt19937 rng(os_seed()); // initializes the mersenne twister engine using the above seed
-    for (int i = vec.size() - 1; i > 1; i--) {
-        std::uniform_int_distribution<std::mt19937::result_type> dist(0, i); // gets a uniform distribution of the numbers from 0 to i
-        int j = dist(rng); // get random number using the above distribution
-        T temp = vec.at(i); // swap items i and j
-        vec.at(i) = vec.at(j);
-        vec.at(j) = temp;
-    }
 }

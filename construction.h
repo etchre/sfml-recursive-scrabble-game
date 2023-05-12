@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "button.h"
 #include "objects.h"
 
 using std::vector;
@@ -18,5 +19,11 @@ namespace construction{
         const int& y,
         vector<objects::Box>& boxVec,
         list<objects::Slot>& slotVec
+    );
+
+    void constructCorrectTextboxes(
+        const sf::Font& font, 
+        const vector<string>& words, 
+        vector<objects::Button>& buttonVec
     );
 }

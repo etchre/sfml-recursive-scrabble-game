@@ -11,7 +11,8 @@
 	{
 		"commands" : 
 		[
-			"ADD_LIBRARY"
+			"ADD_LIBRARY",
+			"install"
 		],
 		"files" : 
 		[
@@ -25,7 +26,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 12,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 22,
 				"parent" : 0
 			}
 		]
@@ -36,7 +43,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++17"
+					"fragment" : "-O3 -DNDEBUG -std=c++17"
 				}
 			],
 			"language" : "CXX",
@@ -58,6 +65,20 @@
 		}
 	],
 	"id" : "LibsModule::@6890427a1f51a3e7e1df",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
 	"name" : "LibsModule",
 	"nameOnDisk" : "libLibsModule.a",
 	"paths" : 
