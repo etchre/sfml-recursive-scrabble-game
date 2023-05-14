@@ -323,6 +323,13 @@ int main() {
             guessCounterCircle.setOutlineColor(sf::Color::Transparent);
             if(guesses <= 0) {
                 guessCounterText.setString("out of guesses, game over!");
+                for(auto& b : buttons) {
+                    if(unguessedWords.contains(b.text)) {
+                        b.hidden = false;
+                        b.fillColor = sf::Color(188,71,73);
+                        unguessedWords.erase(b.text);
+                    }
+                }
             } else {
                 guessCounterText.setString("congrats! you got them all!");
             }
