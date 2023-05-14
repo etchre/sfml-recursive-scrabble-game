@@ -219,7 +219,7 @@ build cmake_object_order_depends_target_scrabble-game-sfml: phony || cmake_objec
 
 build CMakeFiles/scrabble-game-sfml.dir/main.cpp.o: CXX_COMPILER__scrabble-game-sfml_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/main.cpp || cmake_object_order_depends_target_scrabble-game-sfml
   DEP_FILE = CMakeFiles/scrabble-game-sfml.dir/main.cpp.o.d
-  FLAGS = -g -std=c++17
+  FLAGS = -g -std=c++20
   OBJECT_DIR = CMakeFiles/scrabble-game-sfml.dir
   OBJECT_FILE_DIR = CMakeFiles/scrabble-game-sfml.dir
 
@@ -252,25 +252,25 @@ build cmake_object_order_depends_target_LibsModule: phony || CMakeFiles/LibsModu
 
 build CMakeFiles/LibsModule.dir/word.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/word.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/word.cpp.o.d
-  FLAGS = -g -std=c++17
+  FLAGS = -g -std=c++20
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
 build CMakeFiles/LibsModule.dir/utilities.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/utilities.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/utilities.cpp.o.d
-  FLAGS = -g -std=c++17
+  FLAGS = -g -std=c++20
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
 build CMakeFiles/LibsModule.dir/objects.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/objects.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/objects.cpp.o.d
-  FLAGS = -g -std=c++17
+  FLAGS = -g -std=c++20
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 
 build CMakeFiles/LibsModule.dir/construction.cpp.o: CXX_COMPILER__LibsModule_unscanned_Debug /home/ethan/Documents/spring-2023/cpsc-25/sfml-recursive-scrabble-game/construction.cpp || cmake_object_order_depends_target_LibsModule
   DEP_FILE = CMakeFiles/LibsModule.dir/construction.cpp.o.d
-  FLAGS = -g -std=c++17
+  FLAGS = -g -std=c++20
   OBJECT_DIR = CMakeFiles/LibsModule.dir
   OBJECT_FILE_DIR = CMakeFiles/LibsModule.dir
 

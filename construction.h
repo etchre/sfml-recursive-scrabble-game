@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <list>
+#include <unordered_map>
 
 #include <SFML/Graphics.hpp>
 
@@ -16,12 +17,14 @@ namespace construction{
         const sf::Font& font,
         const string& word, 
         vector<objects::Box>& boxVec,
-        list<objects::Slot>& slotVec
+        list<objects::Slot>& slotVec,
+        const std::unordered_map<string, sf::Texture>& textureMap
     );
 
     void constructCorrectTextboxes(
         const sf::Font& font, 
         const vector<string>& words, 
-        vector<objects::Button>& buttonVec
+        vector<objects::Button>& buttonVec,
+        const string& hiddenText
     );
 }

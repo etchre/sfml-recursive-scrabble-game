@@ -15,16 +15,16 @@ namespace objects {
                 const char& letter=' ', 
                 const float& s=Box::size
             );
-            inline static float size = 60;
-            inline static sf::Color textColor = sf::Color(218,215,205);
+            inline static float size = 61;
+            inline static sf::Color textColor = sf::Color(0,0,0);
             sf::Color squareColor = sf::Color(88,129,87); 
             sf::Text* getLetter();
             char getCharLetter();
             sf::RectangleShape* getSquare();
             void draw(sf::RenderWindow& window) const;
             void update(const sf::Vector2i& mousePos);
-            void setPosition(const float& x, const float& y);
-            void move(const float& x=0.0, const float& y=0.0);
+            void setPosition(const int& x, const int& y);
+            void move(const int& x=0, const int& y=0);
             bool checkMouseClick(const sf::Vector2i& mousePos);
             bool isMouseOver(const sf::Vector2i& mousePos);
             bool focus = false;

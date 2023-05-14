@@ -6,21 +6,25 @@ void construction::constructWord(
     const sf::Font& font,
     const string& word, 
     vector<objects::Box>& boxVec,
-    list<objects::Slot>& slotVec
+    list<objects::Slot>& slotVec,
+    const std::unordered_map<string, sf::Texture>& textureMap
 ) {
     float slotSizeDifference = (objects::Slot::size - objects::Box::size)/2;
-    float inc = 7;
-    int gap = 15;
+    float inc = 10;
+    int gap = 5;
     std::cout << slotSizeDifference << std::endl;
     for(const char& c : word) {
         boxVec.push_back(objects::Box(font, 0+inc, 200, c));
+        boxVec.back().getSquare()->setTexture(
+            &textureMap.at(string(1,c))
+        );
         slotVec.push_back(
             objects::Slot(
                 0-slotSizeDifference+inc, 
                 200-slotSizeDifference
             )
         );
-        inc+=(gap+objects::Slot::size);
+        inc+=(gap+slotVec.back().square.getLocalBounds().width);
     }
     auto iter = slotVec.begin();
     // std::cout << "from construction" << std::endl;
@@ -38,7 +42,8 @@ void construction::constructWord(
 void construction::constructCorrectTextboxes(
     const sf::Font& font, 
     const vector<string>& words, 
-    vector<objects::Button>& buttonVec
+    vector<objects::Button>& buttonVec,
+    const string& hiddenText
 ) {
     float inc = 0;
     int gap = 5;
@@ -48,7 +53,7 @@ void construction::constructCorrectTextboxes(
                 font,
                 true,
                 0+inc, 
-                400,
+                282,
                 s,
                 20,
                 sf::Color(33,37,41)
@@ -60,6 +65,9 @@ void construction::constructCorrectTextboxes(
     float center = 400 - (inc/2);
     for(auto& b : buttonVec) {
         b.move(center);
+        b.hiddenText.setFont(font);
+        b.hiddenText.setString(hiddenText);
+        b.hiddenText.setCharacterSize(16);
     }
 }
 

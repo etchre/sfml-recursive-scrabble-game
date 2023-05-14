@@ -224,7 +224,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "LibsModule::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-LibsModule-Debug-c51be3c33f15d630a5f7.json",
+					"jsonFile" : "target-LibsModule-Debug-56aa4046fa8ec9db46f7.json",
 					"name" : "LibsModule",
 					"projectIndex" : 0
 				},
@@ -301,7 +301,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "scrabble-game-sfml::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-scrabble-game-sfml-Debug-cba0c03392c3c2d3971b.json",
+					"jsonFile" : "target-scrabble-game-sfml-Debug-afdd8fb87f651f668ced.json",
 					"name" : "scrabble-game-sfml",
 					"projectIndex" : 0
 				}

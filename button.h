@@ -45,13 +45,14 @@ namespace objects {
             sf::RectangleShape rect;
             bool hidden = false;
             string text;
+            sf::Text hiddenText;
             sf::Color fillColor;
 
         private:
             inline static sf::Color rectBorderColor = sf::Color(52,58,64);
             sf::Color clickColor;
             sf::Text buttonText;
-            inline static sf::Color textColor = sf::Color(218,215,205);
+            inline static sf::Color textColor = sf::Color(0,0,0);
     };
 }
 

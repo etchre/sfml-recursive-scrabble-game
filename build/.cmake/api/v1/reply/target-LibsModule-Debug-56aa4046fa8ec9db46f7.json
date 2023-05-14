@@ -43,7 +43,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=c++17"
+					"fragment" : "-g -std=c++20"
 				}
 			],
 			"language" : "CXX",
@@ -53,7 +53,7 @@
 				[
 					1
 				],
-				"standard" : "17"
+				"standard" : "20"
 			},
 			"sourceIndexes" : 
 			[

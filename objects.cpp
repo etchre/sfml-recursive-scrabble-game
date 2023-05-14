@@ -12,7 +12,7 @@ namespace objects {
     //box definitions
     Box::Box(const sf::Font& font, const float& x, const float& y, const char& letter, const float& s) {
         this->square = sf::RectangleShape(sf::Vector2f(Box::size,Box::size));
-        this->square.setFillColor(Box::squareColor);
+        //this->square.setFillColor(Box::squareColor);
         this->square.setPosition(x,y);
 
         this->charLetter = letter;
@@ -45,7 +45,7 @@ namespace objects {
 
     void Box::draw(sf::RenderWindow& window) const {
         window.draw(this->square);
-        window.draw(this->letter);
+        //window.draw(this->letter);
     }
 
     void Box::update(const sf::Vector2i& mousePos) {
@@ -65,11 +65,11 @@ namespace objects {
             }
             this->square.setFillColor(sf::Color(163, 177, 138));
         } else {
-            this->square.setFillColor(sf::Color(88,129,87));
+            this->square.setFillColor(sf::Color(255,255,255));
         }
     }
 
-    void Box::setPosition(const float& x, const float& y) {
+    void Box::setPosition(const int& x, const int& y) {
         sf::FloatRect textBounds = this->letter.getGlobalBounds();
         this->square.setPosition(x, y);
         this->letter.setPosition(
@@ -79,7 +79,7 @@ namespace objects {
         );
     }
 
-    void Box::move(const float& x, const float& y) {
+    void Box::move(const int& x, const int& y) {
         this->square.move(x,y);
         this->letter.move(x,y);
     }
@@ -225,7 +225,7 @@ namespace objects {
             sf::Vector2f(buttonTextRect.width*1.2,buttonTextRect.height*1.5)
         );
         this->rect.setFillColor(fillColor);
-        this->rect.setOutlineThickness(2);
+        this->rect.setOutlineThickness(1);
         this->rect.setOutlineColor(Button::rectBorderColor);
 
         this->fillColor = fillColor;
@@ -241,6 +241,8 @@ namespace objects {
         window.draw(this->rect);
         if(!hidden) {
             window.draw(this->buttonText);
+        } else {
+            window.draw(this->hiddenText);
         }
     }
 
@@ -261,11 +263,17 @@ namespace objects {
             this->rect.getPosition().x - this->buttonText.getCharacterSize()/24 + rectBounds.width/2 - textBounds.width/2 - 4,
             this->rect.getPosition().y - this->buttonText.getCharacterSize() + textBounds.height + (rectBounds.height - textBounds.height)/2
         );
+        this->hiddenText.setPosition(
+            //squarePos->x + this->letter.getCharacterSize() - 50 + Box::size/2 - 14
+            this->rect.getPosition().x - this->buttonText.getCharacterSize()/24 + rectBounds.width/2 - textBounds.width/2 - 4,
+            this->rect.getPosition().y - this->buttonText.getCharacterSize() + textBounds.height + (rectBounds.height - textBounds.height)/2
+        );
     }
 
     void Button::move(const float& x, const float& y) {
         this->rect.move(x,y);
         this->buttonText.move(x,y);
+        this->hiddenText.move(x,y);
     }
 
     bool Button::isMouseOver(const sf::Vector2i &mousePos) {

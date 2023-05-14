@@ -27,9 +27,10 @@ namespace objects {
             void setBox(Box* box);
             char getHeldLetter();
             objects::Box* heldBox = nullptr;
+            sf::RectangleShape square;
 
         private:
-            sf::RectangleShape square;
+            
             
     };
 
