@@ -7,7 +7,8 @@ void construction::constructWord(
     const string& word, 
     vector<objects::Box>& boxVec,
     list<objects::Slot>& slotVec,
-    const std::unordered_map<string, sf::Texture>& textureMap
+    const std::unordered_map<string, sf::Texture>& textureMap,
+    float& width
 ) {
     float slotSizeDifference = (objects::Slot::size - objects::Box::size)/2;
     float inc = 10;
@@ -26,6 +27,7 @@ void construction::constructWord(
         );
         inc+=(gap+slotVec.back().square.getLocalBounds().width);
     }
+    width = inc;
     auto iter = slotVec.begin();
     // std::cout << "from construction" << std::endl;
     for(objects::Box& b : boxVec) {

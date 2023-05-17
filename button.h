@@ -24,6 +24,18 @@ namespace objects {
                 const sf::Color& fillColor = sf::Color(88,129,87),
                 const sf::Color& clickColor = sf::Color(163,177,138)
             );
+            Button( //button with lambda and texture
+                const float& x,
+                const float& y,
+                const float& w,
+                const float& h,
+                const std::function<void()>& f,
+                const sf::Texture* texture,
+                const bool& shown = false,
+                const int& size = 32,
+                const sf::Color& rectColor = sf::Color(88,129,87),
+                const sf::Color& clickColor = sf::Color(163,177,138)
+            );
             Button( //button without a function, essentially a text box
                 const sf::Font& font,
                 const bool& hidden,
@@ -47,6 +59,8 @@ namespace objects {
             string text;
             sf::Text hiddenText;
             sf::Color fillColor;
+            sf::Texture* texture = nullptr;
+            bool alwaysShown = false;
 
         private:
             inline static sf::Color rectBorderColor = sf::Color(52,58,64);

@@ -18,7 +18,8 @@ namespace construction{
         const string& word, 
         vector<objects::Box>& boxVec,
         list<objects::Slot>& slotVec,
-        const std::unordered_map<string, sf::Texture>& textureMap
+        const std::unordered_map<string, sf::Texture>& textureMap,
+        float& width
     );
 
     void constructCorrectTextboxes(

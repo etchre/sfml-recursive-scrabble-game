@@ -176,7 +176,7 @@ namespace objects {
 //button member defintions
 namespace objects {
 
-    Button::Button(
+    Button::Button( //button with lambda
         const sf::Font& font,
         const float& x,
         const float& y,
@@ -202,6 +202,37 @@ namespace objects {
 
         this->hasFunction = true;
         this->clickFunction = f;
+        
+        this->setPosition(x,y);
+    }
+
+    Button::Button( //button with lambda and texture
+                const float& x,
+                const float& y,
+                const float& w,
+                const float& h,
+                const std::function<void()>& f,
+                const sf::Texture* texture,
+                const bool& shown,
+                const int& size,
+                const sf::Color& rectColor,
+                const sf::Color& clickColor
+    ) {
+        this->buttonText.setFillColor(Button::textColor);
+
+        sf::Rect buttonTextRect = this->buttonText.getLocalBounds();
+        this->rect = sf::RectangleShape(
+            sf::Vector2f(w,h)
+        );
+        this->rect.setTexture(texture);
+
+        this->fillColor = sf::Color(255,255,255);
+        this->clickColor = clickColor;
+
+        this->hasFunction = true;
+        this->clickFunction = f;
+
+        this->alwaysShown = shown;
         
         this->setPosition(x,y);
     }

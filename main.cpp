@@ -1,4 +1,6 @@
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -54,11 +56,6 @@ int main() {
         settings
     );
 
-    sf::Texture letterA;
-    if(!letterA.loadFromFile("../assets/letters/a.png")) {
-        return -1;
-    }
-
     std::unordered_map<string, sf::Texture> lettersMap;
     fs::path lettersPath = fs::current_path() /= "../assets/letters";
     //cout << lettersPath << endl;
@@ -72,6 +69,33 @@ int main() {
             lettersMap[filename] = currLetter;
         }
     }
+    std::unordered_map<string, sf::Texture> buttonsMap;
+    fs::path buttonsPath = fs::current_path() /= "../assets/buttons";
+    for(const auto& entry : fs::directory_iterator(buttonsPath)) {
+        sf::Texture currButton;
+        if(!currButton.loadFromFile(entry.path())) {
+            cout << "couldn't find " << entry.path().filename() << "!" << endl;
+        } else {
+            string filename = entry.path().stem();
+            buttonsMap[filename] = currButton;
+        }
+    }
+
+    sf::Texture titleTexture;
+    if(!titleTexture.loadFromFile("../assets/title.png")) {
+        cout << "couldn't find the title image!" << endl;
+    }
+    sf::Sprite titleImage;
+    titleImage.setTexture(titleTexture);
+    titleImage.setScale(sf::Vector2f(0.3,0.3));
+    
+    {
+        sf::FloatRect titleBounds = titleImage.getGlobalBounds();
+        float titleCenter = 400 - (titleBounds.width)/2;
+        titleImage.setPosition(titleCenter-10, 25);
+    }
+    
+
 
     sf::Clock clock;
 
@@ -99,7 +123,7 @@ int main() {
     wordListBySize = wordList; //make copy of wordList;
     utilities::quicksort(wordListBySize, 0, wordListBySize.size() - 1);
 
-    int charAmount = 4;
+    int charAmount = 7;
     unordered_set<char> randomChars;
     string randomString = "";
     vector<string> validWords;
@@ -135,11 +159,11 @@ int main() {
             shuffle(wordChars);
             randomString = string{wordChars.begin(), wordChars.end()};
         }
-        for (vector<char>::iterator iter = wordChars.begin(); iter != wordChars.end(); std::advance(iter, 1)) {
-            if (randomChars.find(*iter) == randomChars.end()) {
-                randomChars.insert(*iter);
-            }
-        }
+        // for (vector<char>::iterator iter = wordChars.begin(); iter != wordChars.end(); std::advance(iter, 1)) {
+        //     if (randomChars.find(*iter) == randomChars.end()) {
+        //         randomChars.insert(*iter);
+        //     }
+        // }
         break;
     }
 
@@ -218,29 +242,37 @@ int main() {
 
     sf::Color background_color(58,90,64);
 
+    objects::Box* heldBox = nullptr;
+
+    bool finished = false;
+
+    float textBoxesWidth = 0;
+
     vector<objects::Box> boxes;
     list<objects::Slot> slots;
+    vector<objects::Button> textBoxes;
     vector<objects::Button> buttons;
+    construction::constructCorrectTextboxes(
+        font,
+        validWords,
+        textBoxes,
+        hiddenText
+    );
     construction::constructWord(
         font, 
         randomString, 
         boxes, 
         slots,
-        lettersMap
-    );
-    construction::constructCorrectTextboxes(
-        font,
-        validWords,
-        buttons,
-        hiddenText
+        lettersMap,
+        textBoxesWidth
     );
     buttons.push_back(
         objects::Button(
             font, 
             0, 
             320, 
-            [&slots, &wordList, &buttons, &charAmount, &guesses, &sentence, &unguessedWords, &guessCounterCircle,
-                &correctMessages, &incorrectMessages, &transparencyValue, &validWords, &guessCounterText]() {
+            [&slots, &wordList, &textBoxes, &charAmount, &guesses, &sentence, &unguessedWords, &guessCounterCircle,
+                &correctMessages, &incorrectMessages, &transparencyValue, &validWords, &guessCounterText, &textBoxesWidth]() {
                 string word = "";
                 for(objects::Slot& s : slots) {
                     char currLetter = s.getHeldLetter();
@@ -255,7 +287,7 @@ int main() {
                         sentence.setFillColor(sf::Color(106,153,78));
                         transparencyValue = 255;
                         correctMessages.pop_back();
-                        for(auto& b : buttons) {
+                        for(auto& b : textBoxes) {
                             if(b.text == word) {
                                 b.hidden = false;
                                 b.fillColor = sf::Color(106,153,78);
@@ -291,7 +323,6 @@ int main() {
                 } else {
                     guessCounterText.setString(std::to_string(guesses)+"  incorrect guess left");
                 }
-                
                 center = 400 - guessCounterText.getLocalBounds().width/2;
                 guessCounterText.setPosition(center,450);
                 guessCounterCircle.setPosition(400 - guessCounterText.getLocalBounds().width/2 - 6,451);
@@ -304,10 +335,92 @@ int main() {
         float center = 400 - (buttons.back().rect.getLocalBounds().width/2)-5;
         buttons.back().move(center);
     }
-    
-    objects::Box* heldBox = nullptr;
+    buttons.push_back( //restart button
+        objects::Button(
+            700, 
+            500, 
+            75,
+            75,
+            [&sub, &randomString, &guesses, &validWords, &wordList, &unguessedWords, &guessCounterText, &textBoxesWidth,
+                &textBoxes, &boxes, &slots, &heldBox, &finished, &font, hiddenText, lettersMap, &guessCounterCircle]() {
+                guesses = 3;
+                shuffle(sub);
+                for (const Word &word : sub) {
+                    string chosenWord = word.getWord();
+                    validWords = utilities::findAllValidWords(wordList, chosenWord);
+                    // expert mode
+                    //  if(findAllValidWords(chosenWord).size() != 1) {
+                    //      continue;
+                    //  }
+                    // hard mode
+                    //  if(validWords.size() != 2) {
+                    //      continue;
+                    //  }
+                    // easy mode
+                    if (validWords.size() < 3 || validWords.size() > 4) {
+                        continue;
+                    }
+                    // medium mode
+                    //  if(validWords.size() < 5) {
+                    //      continue;
+                    //  }
+                    vector<char> wordChars(chosenWord.begin(), chosenWord.end());
+                    randomString = string{wordChars.begin(), wordChars.end()};
+                    while(randomString == chosenWord) {
+                        shuffle(wordChars);
+                        randomString = string{wordChars.begin(), wordChars.end()};
+                    }
+                    // for (vector<char>::iterator iter = wordChars.begin(); iter != wordChars.end(); std::advance(iter, 1)) {
+                    //     if (randomChars.find(*iter) == randomChars.end()) {
+                    //         randomChars.insert(*iter);
+                    //     }
+                    // }
+                    break;
+                }
+                textBoxes.clear();
+                boxes.clear();
+                slots.clear();
 
-    bool finished = false;
+                unguessedWords = unordered_set<string>(validWords.begin(), validWords.end());
+
+                construction::constructCorrectTextboxes(
+                    font,
+                    validWords,
+                    textBoxes,
+                    hiddenText
+                );
+                construction::constructWord(
+                    font, 
+                    randomString, 
+                    boxes, 
+                    slots,
+                    lettersMap,
+                    textBoxesWidth
+                );
+                guessCounterText.setString(std::to_string(guesses)+"  incorrect guesses left");
+                float center = 400 - guessCounterText.getLocalBounds().width/2;
+                guessCounterText.setPosition(center,450);
+                guessCounterCircle.setPosition(400 - guessCounterText.getLocalBounds().width/2 - 6,451);
+                finished = false;
+                
+            }, 
+            &buttonsMap.at("restart"),
+            true
+        )
+    );
+    buttons.push_back( //shuffle button
+        objects::Button(
+            (400-(textBoxesWidth/2))+textBoxesWidth-5, 
+            195,
+            75,
+            75,
+            []() {
+                cout << "click" << endl;
+            },
+            &buttonsMap.at("shuffle"),
+            true
+        )
+    );
 
     while(window.isOpen()) {
         //cout << "x: " << sf::Mouse::getPosition(window).x << " y: " << sf::Mouse::getPosition(window).y << endl;
@@ -318,12 +431,16 @@ int main() {
             transparencyValue -= 0.02;
         }
 
+        if(guesses > 0) {
+            guessCounterCircle.setOutlineColor(sf::Color::White);
+        }
+
         if(guesses <= 0 || unguessedWords.empty()) {
             finished = true;
             guessCounterCircle.setOutlineColor(sf::Color::Transparent);
             if(guesses <= 0) {
                 guessCounterText.setString("out of guesses, game over!");
-                for(auto& b : buttons) {
+                for(auto& b : textBoxes) {
                     if(unguessedWords.contains(b.text)) {
                         b.hidden = false;
                         b.fillColor = sf::Color(188,71,73);
@@ -382,12 +499,14 @@ int main() {
             sentence.getFillColor().r,
             sentence.getFillColor().g,
             sentence.getFillColor().b,
-            transparencyValue));
+            transparencyValue)
+        );
+        window.draw(titleImage);
         window.draw(sentence);
         window.draw(guessCounterText);
         window.draw(guessCounterCircle);
         for(objects::Button& button : buttons) {
-            if(button.isMouseOver(mousePos) && button.hasFunction && heldBox==nullptr && !finished) {
+            if(button.isMouseOver(mousePos) && heldBox==nullptr && (!finished || button.alwaysShown)) {
                 mouseHover = true;
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     button.clicked = true;
@@ -401,12 +520,16 @@ int main() {
                 button.clicked = false;
             }
             
-            if(finished && button.hasFunction) {
+            if(finished && !button.alwaysShown) {
 
             } else {
                 button.draw(window);
                 button.update();
             }
+        }
+        for(objects::Button& textbox : textBoxes) {
+            textbox.draw(window);
+            textbox.update();
         }
         for(objects::Slot& s: slots) {
             if(s.isMouseOver(mousePos)) {
