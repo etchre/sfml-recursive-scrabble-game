@@ -13,7 +13,7 @@ void construction::constructWord(
     float slotSizeDifference = (objects::Slot::size - objects::Box::size)/2;
     float inc = 10;
     int gap = 5;
-    std::cout << slotSizeDifference << std::endl;
+    //std::cout << slotSizeDifference << std::endl;
     for(const char& c : word) {
         boxVec.push_back(objects::Box(font, 0+inc, 200, c));
         boxVec.back().getSquare()->setTexture(

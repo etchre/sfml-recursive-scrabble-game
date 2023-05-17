@@ -88,14 +88,11 @@ int main() {
     sf::Sprite titleImage;
     titleImage.setTexture(titleTexture);
     titleImage.setScale(sf::Vector2f(0.3,0.3));
-    
     {
         sf::FloatRect titleBounds = titleImage.getGlobalBounds();
         float titleCenter = 400 - (titleBounds.width)/2;
-        titleImage.setPosition(titleCenter-10, 25);
+        titleImage.setPosition(titleCenter, 25);
     }
-    
-
 
     sf::Clock clock;
 
@@ -123,7 +120,7 @@ int main() {
     wordListBySize = wordList; //make copy of wordList;
     utilities::quicksort(wordListBySize, 0, wordListBySize.size() - 1);
 
-    int charAmount = 7;
+    int charAmount = 4;
     unordered_set<char> randomChars;
     string randomString = "";
     vector<string> validWords;
@@ -381,6 +378,11 @@ int main() {
                 boxes.clear();
                 slots.clear();
 
+                for(string& s : validWords) {
+                    cout << s << " ";
+                }
+                cout << endl;
+
                 unguessedWords = unordered_set<string>(validWords.begin(), validWords.end());
 
                 construction::constructCorrectTextboxes(
@@ -414,8 +416,24 @@ int main() {
             195,
             75,
             75,
-            []() {
-                cout << "click" << endl;
+            [&randomString, &slots, &boxes, &textBoxesWidth, &lettersMap, &font, &unguessedWords]() {
+                vector<char> wordChars = vector<char>(randomString.begin(), randomString.end());
+                shuffle(wordChars);
+                randomString = string{wordChars.begin(), wordChars.end()};
+                while(unguessedWords.contains(randomString)) {
+                    shuffle(wordChars);
+                    randomString = string{wordChars.begin(), wordChars.end()};
+                }
+                slots.clear();
+                boxes.clear();
+                construction::constructWord(
+                    font, 
+                    randomString, 
+                    boxes, 
+                    slots,
+                    lettersMap,
+                    textBoxesWidth
+                );
             },
             &buttonsMap.at("shuffle"),
             true
@@ -460,7 +478,7 @@ int main() {
                 window.close();
             } 
             if(event.type == sf::Event::MouseLeft) {
-                cout << "mouse left" << endl;
+                //cout << "mouse left" << endl;
                 if(heldBox) {
                     heldBox->focus = false;
                     heldBox = nullptr;
