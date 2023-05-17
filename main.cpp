@@ -29,7 +29,6 @@ using std::list;
 
 namespace fs = std::filesystem;
 
-// new code I inserted into the game
 // shuffles the vector in place
 // implements the fisher yates shuffle
 // used to randomize the letters in words, or the order of the vector of words
@@ -51,7 +50,7 @@ int main() {
 
     sf::RenderWindow window(
         sf::VideoMode(800,600), 
-        "word games!",
+        "anagrams!",
         sf::Style::Default,
         settings
     );
@@ -129,7 +128,7 @@ int main() {
 
     vector<Word> sub = utilities::subsection(wordListBySize, charAmount); //get a vector of words that are all size 'charAmount'
     shuffle(sub); //shuffle the vector of words
-
+    unordered_set<string> unguessedWords;
     //pick a word of the top, since the vector is already shuffled, the word should be a different one most of the time
     for (const Word &word : sub) {
         string chosenWord = word.getWord();
@@ -151,8 +150,9 @@ int main() {
         //      continue;
         //  }
         vector<char> wordChars(chosenWord.begin(), chosenWord.end());
+        unguessedWords = unordered_set<string>(validWords.begin(), validWords.end());
         randomString = string{wordChars.begin(), wordChars.end()};
-        while(randomString == chosenWord) {
+        while(unguessedWords.contains(randomString)) {
             shuffle(wordChars);
             randomString = string{wordChars.begin(), wordChars.end()};
         }
@@ -164,7 +164,7 @@ int main() {
         break;
     }
 
-    unordered_set<string> unguessedWords(validWords.begin(), validWords.end());
+    
 
     //cheat mode
     for(string& s : validWords) {
@@ -362,8 +362,9 @@ int main() {
                     //      continue;
                     //  }
                     vector<char> wordChars(chosenWord.begin(), chosenWord.end());
+                    unguessedWords = unordered_set<string>(validWords.begin(), validWords.end());
                     randomString = string{wordChars.begin(), wordChars.end()};
-                    while(randomString == chosenWord) {
+                    while(unguessedWords.contains(randomString)) {
                         shuffle(wordChars);
                         randomString = string{wordChars.begin(), wordChars.end()};
                     }
@@ -383,7 +384,7 @@ int main() {
                 }
                 cout << endl;
 
-                unguessedWords = unordered_set<string>(validWords.begin(), validWords.end());
+                
 
                 construction::constructCorrectTextboxes(
                     font,
