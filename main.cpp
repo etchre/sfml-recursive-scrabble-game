@@ -36,7 +36,8 @@ template <class T> void shuffle(vector<T> &vec) {
     std::random_device os_seed;  // gets a seed from the operating system
     std::mt19937 rng(os_seed()); // initializes the mersenne twister engine using the above seed
     for (int i = vec.size() - 1; i > 1; i--) {
-        std::uniform_int_distribution<std::mt19937::result_type> dist(0, i); // gets a uniform distribution of the numbers from 0 to i
+        // gets a uniform distribution of the numbers from 0 to i
+        std::uniform_int_distribution<std::mt19937::result_type> dist(0, i); 
         int j = dist(rng); // get random number using the above distribution
         T temp = vec.at(i); // swap items i and j
         vec.at(i) = vec.at(j);
@@ -126,13 +127,22 @@ int main() {
 
     int guesses = 3;
 
-    vector<Word> sub = utilities::subsection(wordListBySize, charAmount); //get a vector of words that are all size 'charAmount'
+    //get a vector of words that are all size 'charAmount'
+    vector<Word> sub = utilities::subsection(wordListBySize, charAmount); 
     shuffle(sub); //shuffle the vector of words
-    unordered_set<string> unguessedWords;
+    unordered_set<string> unguessedWords; // create a set that will be filled in the following loop
     //pick a word of the top, since the vector is already shuffled, the word should be a different one most of the time
     for (const Word &word : sub) {
-        string chosenWord = word.getWord();
-        validWords = utilities::findAllValidWords(wordList, chosenWord);
+        string chosenWord = word.getWord(); //get the string from the word object
+        //get a vector of all possible words in string form from the current word.
+        validWords = utilities::findAllValidWords(wordList, chosenWord); 
+
+        //we now screen the word to make sure it has a specific amount of combinations
+        //words with small amount of combos tend to be really obscure words, and therefore harder
+        //words with larger amount of combos tend to be more common words
+        //if they have too many combos though, they have a higher chance of being obscure
+        //we skip the current word if it doesn't have the right amount of combinations
+
         // expert mode
         //  if(findAllValidWords(chosenWord).size() != 1) {
         //      continue;
@@ -143,28 +153,27 @@ int main() {
         //  }
         // easy mode
         if (validWords.size() < 3 || validWords.size() > 4) {
-            continue;
+            continue; 
         }
         // medium mode
         //  if(validWords.size() < 5) {
         //      continue;
         //  }
-        vector<char> wordChars(chosenWord.begin(), chosenWord.end());
-        unguessedWords = unordered_set<string>(validWords.begin(), validWords.end());
+        
+        //if we have gotten to this point, this word has been selected for the round
+        //turn the string into a vector of characters, this is so we can use the shuffle function on it
+        vector<char> wordChars(chosenWord.begin(), chosenWord.end()); 
+        //create a set from the vector of possible words, this is used for checking if a word has been guessed or not
+        unguessedWords = unordered_set<string>(validWords.begin(), validWords.end()); 
+        //create a string from the vector of characters, this will be used to check if the word is valid or not
         randomString = string{wordChars.begin(), wordChars.end()};
-        while(unguessedWords.contains(randomString)) {
-            shuffle(wordChars);
-            randomString = string{wordChars.begin(), wordChars.end()};
+        //i want the game to start with jumbled letters
+        while(unguessedWords.contains(randomString)) {  //if the randomized characters still make a word, we shuffle again
+            shuffle(wordChars); //shuffle the vector of charracters
+            randomString = string{wordChars.begin(), wordChars.end()}; //create a new string using the vector of charcters.
         }
-        // for (vector<char>::iterator iter = wordChars.begin(); iter != wordChars.end(); std::advance(iter, 1)) {
-        //     if (randomChars.find(*iter) == randomChars.end()) {
-        //         randomChars.insert(*iter);
-        //     }
-        // }
-        break;
+        break; //break out of the for loop
     }
-
-    
 
     //cheat mode
     for(string& s : validWords) {
